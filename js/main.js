@@ -1,49 +1,50 @@
-$.ajax({
-  url: `http://www.omdbapi.com/?apikey=8e8c30a0&s=avengers`,
-  success: (results) => {
-    const mov = results.Search;
-    let cards = '';
+const cardSection = document.querySelector('.card__section');
 
-    mov.forEach((m) => {
-      cards += cardsMovie2(m);
+fetch('http://www.omdbapi.com/?apikey=8e8c30a0&s=spider-man')
+  .then((resp) => resp.json())
+  .then((resp) => {
+    const movie = resp.Search;
+    let cardHome = '';
+
+    movie.forEach((mov) => {
+      cardHome += cardsMovie2(mov);
+
+      cardSection.innerHTML = cardHome;
     });
-    $('.card__section').html(cards);
-  },
+  })
+  .catch((err) => console.log(err.message));
 
-  error: (er) => {
-    console.log(er.responseText);
-  },
-});
+const searchButton = document.querySelector('.search__button');
+const inputSearch = document.querySelector('.search__input');
 
-$('.search__button').on('click', () => {
-  $.ajax({
-    url: `http://www.omdbapi.com/?apikey=8e8c30a0&s=${$('.search__input').val()}`,
-    success: (results) => {
-      const mov = results.Search;
-      let cards = '';
+searchButton.addEventListener('click', function () {
+  fetch(`http://www.omdbapi.com/?apikey=8e8c30a0&s=${inputSearch.value}`)
+    .then((resp) => resp.json())
+    .then((resp) => {
+      const movie = resp.Search;
+      let searchCard = '';
 
-      mov.forEach((m) => {
-        cards += cardsMovie(m);
+      movie.forEach((mov) => {
+        searchCard += cardsMovie(mov);
+        cardSection.innerHTML = searchCard;
       });
-      $('.card__section').html(cards);
 
-      $('.card__button').on('click', function () {
-        $.ajax({
-          url: `http://www.omdbapi.com/?apikey=8e8c30a0&i=${$(this).data('imdb')}`,
-          success: (d) => {
-            const movDetails = movieDetails(d);
-            $('.modal__details').html(movDetails);
-          },
-          error: (er) => {
-            console.log(er.responseText);
-          },
+      const cardButton = document.querySelectorAll('.card__button');
+      cardButton.forEach(function (card) {
+        card.addEventListener('click', function () {
+          fetch(`http://www.omdbapi.com/?apikey=8e8c30a0&i=${this.dataset.imdb}`)
+            .then((resp) => resp.json())
+            .then((resp) => {
+              const detailsMovie = movieDetails(resp);
+              const modalDetails = document.querySelector('.modal__details');
+
+              modalDetails.innerHTML = detailsMovie;
+            })
+            .catch((err) => console.log(err.message));
         });
       });
-    },
-    error: (er) => {
-      console.log(er.responseText);
-    },
-  });
+    })
+    .catch((err) => console.log(err.message));
 });
 
 function cardsMovie(m) {
