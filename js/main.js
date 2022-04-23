@@ -2,12 +2,12 @@ $.ajax({
   url: `http://www.omdbapi.com/?apikey=8e8c30a0&s=avengers`,
   success: (results) => {
     const mov = results.Search;
-    let cards = '';
+    let cards = "";
 
     mov.forEach((m) => {
       cards += cardsMovie2(m);
     });
-    $('.card__section').html(cards);
+    $(".card__section").html(cards);
   },
 
   error: (er) => {
@@ -15,24 +15,29 @@ $.ajax({
   },
 });
 
-$('.search__button').on('click', () => {
+$(".form__control").submit((e) => {
+  e.preventDefault();
   $.ajax({
-    url: `http://www.omdbapi.com/?apikey=8e8c30a0&s=${$('.search__input').val()}`,
+    url: `http://www.omdbapi.com/?apikey=8e8c30a0&s=${$(
+      ".search__input"
+    ).val()}`,
     success: (results) => {
       const mov = results.Search;
-      let cards = '';
+      let cards = "";
 
       mov.forEach((m) => {
         cards += cardsMovie(m);
       });
-      $('.card__section').html(cards);
+      $(".card__section").html(cards);
 
-      $('.card__button').on('click', function () {
+      $(".card__button").on("click", function () {
         $.ajax({
-          url: `http://www.omdbapi.com/?apikey=8e8c30a0&i=${$(this).data('imdb')}`,
+          url: `http://www.omdbapi.com/?apikey=8e8c30a0&i=${$(this).data(
+            "imdb"
+          )}`,
           success: (d) => {
             const movDetails = movieDetails(d);
-            $('.modal__details').html(movDetails);
+            $(".modal__details").html(movDetails);
           },
           error: (er) => {
             console.log(er.responseText);
