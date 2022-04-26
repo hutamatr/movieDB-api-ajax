@@ -49,6 +49,7 @@ $(".form__control").submit((e) => {
       console.log(er.responseText);
     },
   });
+  $(".search__input").val("");
 });
 
 function cardsMovie(m) {
