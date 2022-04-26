@@ -1,10 +1,10 @@
-const cardSection = document.querySelector('.card__section');
+const cardSection = document.querySelector(".card__section");
 
-fetch('http://www.omdbapi.com/?apikey=8e8c30a0&s=spider-man')
+fetch("http://www.omdbapi.com/?apikey=8e8c30a0&s=spider-man")
   .then((resp) => resp.json())
   .then((resp) => {
     const movie = resp.Search;
-    let cardHome = '';
+    let cardHome = "";
 
     movie.forEach((mov) => {
       cardHome += cardsMovie2(mov);
@@ -14,29 +14,32 @@ fetch('http://www.omdbapi.com/?apikey=8e8c30a0&s=spider-man')
   })
   .catch((err) => console.log(err.message));
 
-const searchButton = document.querySelector('.search__button');
-const inputSearch = document.querySelector('.search__input');
+const inputSearch = document.querySelector(".search__input");
+const formControl = document.querySelector(".form__control");
 
-searchButton.addEventListener('click', function () {
+formControl.addEventListener("submit", function (e) {
+  e.preventDefault();
   fetch(`http://www.omdbapi.com/?apikey=8e8c30a0&s=${inputSearch.value}`)
     .then((resp) => resp.json())
     .then((resp) => {
       const movie = resp.Search;
-      let searchCard = '';
+      let searchCard = "";
 
       movie.forEach((mov) => {
         searchCard += cardsMovie(mov);
         cardSection.innerHTML = searchCard;
       });
 
-      const cardButton = document.querySelectorAll('.card__button');
+      const cardButton = document.querySelectorAll(".card__button");
       cardButton.forEach(function (card) {
-        card.addEventListener('click', function () {
-          fetch(`http://www.omdbapi.com/?apikey=8e8c30a0&i=${this.dataset.imdb}`)
+        card.addEventListener("click", function () {
+          fetch(
+            `http://www.omdbapi.com/?apikey=8e8c30a0&i=${this.dataset.imdb}`
+          )
             .then((resp) => resp.json())
             .then((resp) => {
               const detailsMovie = movieDetails(resp);
-              const modalDetails = document.querySelector('.modal__details');
+              const modalDetails = document.querySelector(".modal__details");
 
               modalDetails.innerHTML = detailsMovie;
             })
@@ -45,6 +48,7 @@ searchButton.addEventListener('click', function () {
       });
     })
     .catch((err) => console.log(err.message));
+  inputSearch.value = "";
 });
 
 function cardsMovie(m) {
