@@ -1,5 +1,5 @@
 $.ajax({
-  url: `http://www.omdbapi.com/?apikey=8e8c30a0&s=avengers`,
+  url: `https://www.omdbapi.com/?apikey=8e8c30a0&s=avengers`,
   success: (results) => {
     const mov = results.Search;
     let cards = "";
@@ -18,7 +18,7 @@ $.ajax({
 $(".form__control").submit((e) => {
   e.preventDefault();
   $.ajax({
-    url: `http://www.omdbapi.com/?apikey=8e8c30a0&s=${$(
+    url: `https://www.omdbapi.com/?apikey=8e8c30a0&s=${$(
       ".search__input"
     ).val()}`,
     success: (results) => {
@@ -32,7 +32,7 @@ $(".form__control").submit((e) => {
 
       $(".card__button").on("click", function () {
         $.ajax({
-          url: `http://www.omdbapi.com/?apikey=8e8c30a0&i=${$(this).data(
+          url: `https://www.omdbapi.com/?apikey=8e8c30a0&i=${$(this).data(
             "imdb"
           )}`,
           success: (d) => {
