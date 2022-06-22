@@ -1,6 +1,6 @@
 const cardSection = document.querySelector(".card__section");
 
-fetch("http://www.omdbapi.com/?apikey=8e8c30a0&s=spider-man")
+fetch("https://www.omdbapi.com/?apikey=8e8c30a0&s=spider-man")
   .then((resp) => resp.json())
   .then((resp) => {
     const movie = resp.Search;
@@ -19,7 +19,7 @@ const formControl = document.querySelector(".form__control");
 
 formControl.addEventListener("submit", function (e) {
   e.preventDefault();
-  fetch(`http://www.omdbapi.com/?apikey=8e8c30a0&s=${inputSearch.value}`)
+  fetch(`https://www.omdbapi.com/?apikey=8e8c30a0&s=${inputSearch.value}`)
     .then((resp) => resp.json())
     .then((resp) => {
       const movie = resp.Search;
@@ -34,7 +34,7 @@ formControl.addEventListener("submit", function (e) {
       cardButton.forEach(function (card) {
         card.addEventListener("click", function () {
           fetch(
-            `http://www.omdbapi.com/?apikey=8e8c30a0&i=${this.dataset.imdb}`
+            `https://www.omdbapi.com/?apikey=8e8c30a0&i=${this.dataset.imdb}`
           )
             .then((resp) => resp.json())
             .then((resp) => {
